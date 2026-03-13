@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEMBERS ONLY - 鍼灸スタディHub</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* 選択時の色をカスタマイズ */
+    ::selection {
+      background-color: #0f766e; /* teal-700 */
+      color: white;
+    }
+    /* スクロールバー非表示 */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans overflow-hidden">
+
+  <div class="flex h-screen w-full relative">
+    
+    <!-- =========================================
+        メインコンテンツエリア (全画面)
+    ========================================= -->
+    <div class="flex-1 flex flex-col h-full overflow-hidden relative">
+      
+      <!-- ヘッダー -->
+      <header class="bg-white shrink-0 relative z-40 shadow-sm border-b border-slate-200">
+        <!-- 上部の極細メニュー -->
+        <div class="hidden md:flex justify-end items-center px-6 py-2 border-b border-slate-100 text-[10px] tracking-wider space-x-6 text-slate-500">
+          <span class="text-teal-700 font-bold border border-teal-600 px-2 py-0.5 rounded-sm bg-teal-50">MEMBERS ONLY</span>
+        </div>
+
+        <!-- メインナビゲーション -->
+        <div class="flex items-center justify-between px-4 md:px-8 h-16">
+          <!-- ロゴエリア -->
+          <div class="flex items-center space-x-3">
+            <button class="md:hidden text-slate-600" onclick="toggleMenu()">
+              <i data-lucide="menu" id="menu-icon" class="w-6 h-6"></i>
+            </button>
+            <div class="flex items-center space-x-2 cursor-pointer">
+              <i data-lucide="book-open" class="text-teal-700 w-5 h-5 md:w-6 md:h-6 stroke-[1.5]"></i>
+              <span class="text-base md:text-xl font-serif tracking-[0.2em] text-slate-800 font-bold">
+                S H I N K Y U
+              </span>
+            </div>
+          </div>
+
+          <!-- カテゴリタブ（中央）PCのみ -->
+          <div class="hidden md:flex justify-center flex-1 space-x-16 px-8" id="category-tabs-pc">
+            <!-- JSで動的に生成 -->
+          </div>
+
+          <!-- 検索アイコン（右端） -->
+          <div class="flex justify-end w-16"></div>
+        </div>
+      </header>
+
+      <!-- モバイル用ドロップダウンメニュー -->
+      <div id="mobile-menu" class="hidden absolute top-16 left-0 w-full bg-white/95 backdrop-blur-md z-50 flex-col border-b border-slate-200 md:hidden shadow-lg">
+        <button onclick="toggleMenu();" class="py-4 text-sm tracking-widest text-slate-700 hover:bg-slate-50 text-center w-full transition-colors">資料を探す</button>
+      </div>
+
+      <!-- メインコンテンツ -->
+      <main class="flex-1 overflow-y-auto relative bg-slate-50">
+        
+        <!-- =========================================
+            資料検索 (Docs)
+        ========================================= -->
+        <div id="tab-docs" class="block transition-opacity duration-500">
+          <!-- ヒーロー画像セクション（固定画像） -->
+          <div class="relative h-[35vh] md:h-[45vh] w-full bg-slate-200 overflow-hidden mb-12 border-b border-slate-200 flex items-center justify-center">
+
+            <!-- 固定された背景画像 (ローカル画像を読み込み、無ければフォールバック) -->
+            <img 
+              id="hero-image"
+              src="./hero-image.jpg" 
+              onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&q=80&w=2000';"
+              alt="Hero Background" 
+              class="absolute inset-0 w-full h-full object-cover opacity-70 transition-opacity duration-1000"
+            />
+            
+            <!-- 文字を見やすくするための白グラデーション -->
+            <div class="absolute inset-0 bg-gradient-to-t from-white/90 via-white/40 to-transparent"></div>
+            
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 mt-8 z-20">
+              <span class="text-[10px] tracking-[0.5em] text-teal-700 font-bold mb-4 border border-teal-200 px-4 py-1 bg-white/80 backdrop-blur-sm rounded-full shadow-sm">
+                MEMBERS ONLY PORTAL
+              </span>
+              <h2 class="text-xl md:text-3xl font-serif tracking-[0.2em] mb-6 text-slate-800 drop-shadow-sm font-bold leading-relaxed">
+                限られた学生のための、<br class="md:hidden" />特別な学習空間
+              </h2>
+              <div class="w-16 h-[2px] bg-teal-600/50 mb-6"></div>
+              <span class="text-xs md:text-sm tracking-[0.3em] font-medium text-slate-500">
+                PRIVATE RESOURCE ARCHIVE
+              </span>
+            </div>
+          </div>
+
+          <div class="max-w-4xl mx-auto px-4 pb-12">
+            <h2 class="text-2xl font-serif tracking-widest mb-2 text-slate-800 font-bold">DOCUMENTS</h2>
+            <p class="text-xs text-slate-500 tracking-widest mb-8">学習資料・問題集アーカイブ</p>
+
+            <!-- 検索バー -->
+            <div class="flex items-center space-x-4 mb-10">
+              <div class="relative flex-1">
+                <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5"></i>
+                <input 
+                  type="text" 
+                  id="search-input"
+                  onkeyup="handleSearch(this.value)"
+                  placeholder="キーワードで検索 (例: 解剖, 経穴...)" 
+                  class="w-full bg-white border border-slate-200 text-slate-800 pl-12 pr-4 py-4 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all text-sm tracking-wider placeholder:text-slate-400 rounded-lg shadow-sm"
+                />
+              </div>
+            </div>
+
+            <!-- 資料リスト -->
+            <div id="documents-list" class="space-y-4">
+              <!-- JSで動的に生成 -->
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- JavaScript ロジック -->
+  <script>
+    // --- 状態管理 ---
+    let state = {
+      activeCategory: 'すべて',
+      searchQuery: '',
+      isMenuOpen: false,
+      completedDocs: []
+    };
+
+    const categories = ['すべて', '基礎科目', '応用科目'];
+    
+    // =========================================================================
+    // ★★★ 資料の追加・削除は、ここのリストを直接書き換えてください ★★★
+    // =========================================================================
+    let documents = [
+      { 
+        id: 1, 
+        title: '【サンプル】解剖学：骨格のまとめ', 
+        category: '基礎科目', 
+        group: '基礎科目', 
+        type: 'LINK', 
+        date: '2026-03-13', 
+        url: 'https://drive.google.com/' 
+      },
+    ];
+
+    // --- DOM要素 ---
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+
+    // --- アクション ---
+    function setCategory(cat) {
+      state.activeCategory = cat;
+      renderCategories();
+      renderDocuments();
+    }
+
+    function handleSearch(val) {
+      state.searchQuery = val;
+      renderDocuments();
+    }
+
+    function toggleMenu() {
+      state.isMenuOpen = !state.isMenuOpen;
+      if (state.isMenuOpen) {
+        mobileMenu.classList.remove('hidden');
+        mobileMenu.classList.add('flex');
+        menuIcon.setAttribute('data-lucide', 'x');
+      } else {
+        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.remove('flex');
+        menuIcon.setAttribute('data-lucide', 'menu');
+      }
+      lucide.createIcons();
+    }
+
+    function toggleComplete(id) {
+      if (state.completedDocs.includes(id)) {
+        state.completedDocs = state.completedDocs.filter(docId => docId !== id);
+      } else {
+        state.completedDocs.push(id);
+      }
+      renderDocuments();
+    }
+
+    // --- レンダリング ---
+    function renderCategories() {
+      const container = document.getElementById('category-tabs-pc');
+      container.innerHTML = categories.map(cat => {
+        const isActive = state.activeCategory === cat;
+        return `
+          <button 
+            onclick="setCategory('${cat}')"
+            class="h-16 px-2 text-sm tracking-widest transition-all relative font-bold ${isActive ? 'text-teal-700' : 'text-slate-400 hover:text-teal-600'}"
+          >
+            ${cat}
+            ${isActive ? '<div class="absolute bottom-0 left-0 w-full h-[3px] bg-teal-600 rounded-t-md"></div>' : ''}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderDocuments() {
+      const container = document.getElementById('documents-list');
+      
+      const filtered = documents.filter(doc => {
+        const matchCategory = state.activeCategory === 'すべて' || doc.group === state.activeCategory;
+        const matchSearch = doc.title.toLowerCase().includes(state.searchQuery.toLowerCase()) || doc.category.includes(state.searchQuery);
+        return matchCategory && matchSearch;
+      });
+
+      if(filtered.length === 0) {
+        container.innerHTML = `
+          <div class="flex flex-col items-center justify-center py-16 text-slate-400 border-2 border-slate-200 border-dashed rounded-xl bg-white shadow-sm">
+            <i data-lucide="inbox" class="w-12 h-12 mb-4 opacity-50 text-teal-600"></i>
+            <p class="text-sm tracking-widest font-bold text-slate-600">現在、資料はありません。</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = filtered.map(doc => {
+        const isCompleted = state.completedDocs.includes(doc.id);
+        
+        return `
+          <div class="flex flex-col md:flex-row md:items-center justify-between p-6 border transition-all duration-300 rounded-xl bg-white shadow-sm hover:shadow-md ${isCompleted ? 'border-slate-200 opacity-60 bg-slate-50' : 'border-slate-200 hover:border-teal-300'}">
+            <div class="flex items-start md:items-center space-x-4 mb-4 md:mb-0">
+              <button 
+                onclick="toggleComplete(${doc.id})"
+                class="mt-1 md:mt-0 transition-all hover:scale-110 ${isCompleted ? 'text-teal-600' : 'text-slate-300 hover:text-teal-400'}"
+              >
+                <i data-lucide="check-circle" class="w-7 h-7 ${isCompleted ? 'stroke-[2.5]' : 'stroke-[1.5]'}"></i>
+              </button>
+              <div>
+                <div class="flex items-center space-x-3 mb-1.5">
+                  <span class="text-[10px] tracking-widest font-bold border border-teal-200 bg-teal-50 px-2.5 py-0.5 text-teal-700 rounded-md">
+                    ${doc.category}
+                  </span>
+                  <span class="text-[10px] tracking-wider font-medium text-slate-400">${doc.date}</span>
+                </div>
+                <h3 class="text-base font-bold tracking-wide ${isCompleted ? 'text-slate-400 line-through' : 'text-slate-800'}">
+                  ${doc.title}
+                </h3>
+              </div>
+            </div>
+            
+            <div class="flex items-center space-x-2 w-full md:w-auto mt-2 md:mt-0">
+              <a href="${doc.url}" target="_blank" rel="noopener noreferrer" class="flex-1 md:flex-none flex items-center justify-center space-x-2 px-6 py-2.5 border text-xs font-bold tracking-widest transition-colors rounded-lg cursor-pointer ${isCompleted ? 'border-slate-200 text-slate-400 bg-slate-50' : 'border-slate-200 text-teal-700 bg-white hover:bg-teal-50 hover:border-teal-300'}">
+                <i data-lucide="external-link" class="w-4 h-4 stroke-2"></i>
+                <span>OPEN</span>
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      lucide.createIcons();
+    }
+
+    // --- 初期化 ---
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCategories();
+      renderDocuments();
+      lucide.createIcons();
+    });
+
+  </script>
+</body>
+</html>
